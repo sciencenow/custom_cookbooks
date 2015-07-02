@@ -26,6 +26,8 @@ server {
     try_files $uri/index.html $uri/index.htm @unicorn;
   }
 
+  rewrite ^ https://$server_name$request_uri? permanent;
+
   location @unicorn {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
@@ -87,8 +89,6 @@ server {
   ssl_dhparam <%= node[:nginx][:dir] %>/ssl/dhparam.pem;
 
   keepalive_timeout 5;
-
-  rewrite ^ https://$server_name$request_uri? permanent;
 
   root <%= @application[:absolute_document_root] %>;
 
