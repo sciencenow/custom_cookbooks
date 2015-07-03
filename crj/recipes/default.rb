@@ -1,4 +1,16 @@
 node[:deploy].each do |application, deploy|
+  directory "#{deploy[:deploy_to]}/shared/config" do
+      owner 'deploy'
+      group 'www-data'
+      mode 0774
+      recursive true
+      action :create
+    end
+
+  file File.join(deploy[:deploy_to], 'shared', 'config', 'service_env_variables.yml') do
+    content YAML.dump(node[:service_env_variables][application].to_hash)
+  end
+
   cron_env = {'PATH' => '/usr/local/bin:$PATH'}
   cron 'daily data backup cron' do
     environment cron_env
