@@ -1,0 +1,6 @@
+name              'crj'
+maintainer        'Tim Keller'
+maintainer_email  'tim.keller@innoq.com'
+license           'MIT License (MIT)'
+version           '0.0.1'
+recipe            'crj::default', 'Adds the specified cron jobs.'
